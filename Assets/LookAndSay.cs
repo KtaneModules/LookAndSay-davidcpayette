@@ -87,7 +87,7 @@ public class LookAndSay : MonoBehaviour
         //Generate starting string
         inputstring = GenerateStartingString();
         ScreenText.text = inputstring;
-        Debug.LogFormat("[LookAndSay #{0}] The starting string is: " + inputstring, moduleId);
+        Debug.LogFormat("[Look And Say #{0}] The starting string is: " + inputstring, moduleId);
 
         //Used for editing font size in ButtonPress
         initialfontsize = ScreenText.fontSize;
@@ -96,51 +96,51 @@ public class LookAndSay : MonoBehaviour
         indexoffset = mod(ConvToPosSmall(bomb.GetSerialNumber()[1]) + (int)char.GetNumericValue(inputstring[11]),5);
         mazeselect = mod(ConvToPosSmall(bomb.GetSerialNumber()[0]) + (int)char.GetNumericValue(inputstring[0]),5);
         ChooseMaze(mazeselect);
-        Debug.LogFormat("[LookAndSay #{0}] Use maze " + mazeselect, moduleId);
-        Debug.LogFormat("[LookAndSay #{0}] The offset is " + indexoffset, moduleId);
+        Debug.LogFormat("[Look And Say #{0}] Use maze " + mazeselect, moduleId);
+        Debug.LogFormat("[Look And Say #{0}] The offset is " + indexoffset, moduleId);
 
         //Convert using Look and say 
         string lookandsaystring = GetLookAndSay(inputstring);
-        Debug.LogFormat("[LookAndSay #{0}] The string after converting is: " + lookandsaystring, moduleId);
+        Debug.LogFormat("[Look And Say #{0}] The string after converting is: " + lookandsaystring, moduleId);
 
         //Convert string to moves
         List<char> movelist = ConvertStringToMoves(lookandsaystring);
         string movesstring = ListToString(movelist);
-        Debug.LogFormat("[LookAndSay #{0}] Converting the string to moves: " + movesstring, moduleId);
+        Debug.LogFormat("[Look And Say #{0}] Converting the string to moves: " + movesstring, moduleId);
         
         //Find start position
         startpos = new List<int>() { mod(ConvToPosSmall(bomb.GetSerialNumber()[2])+ (int)char.GetNumericValue(inputstring[1]),5), mod(ConvToPosSmall(bomb.GetSerialNumber()[3]) + (int)char.GetNumericValue(inputstring[2]), 5) };
-        Debug.LogFormat("[LookAndSay #{0}] Starting position is: (" + startpos[0].ToString() + "," + startpos[1].ToString() + ")",moduleId);
+        Debug.LogFormat("[Look And Say #{0}] Starting position is: (" + startpos[0].ToString() + "," + startpos[1].ToString() + ")",moduleId);
 
         //Shift start position using moves
         ShiftStartPos(startpos, movelist);
-        Debug.LogFormat("[LookAndSay #{0}] Moved starting position to: (" + startpos[0].ToString() + "," + startpos[1].ToString() + ")",moduleId);
+        Debug.LogFormat("[Look And Say #{0}] Moved starting position to: (" + startpos[0].ToString() + "," + startpos[1].ToString() + ")",moduleId);
 
         //Find end position
         endpos = new List<int>() { mod(ConvToPosSmall(bomb.GetSerialNumber()[4]) + (int)char.GetNumericValue(inputstring[9]), 5), mod(ConvToPosSmall(bomb.GetSerialNumber()[5]) + (int)char.GetNumericValue(inputstring[10]), 5) };
-        Debug.LogFormat("[LookAndSay #{0}] Ending position is: (" + endpos[0].ToString() + "," + endpos[1].ToString() + ")",moduleId);
+        Debug.LogFormat("[Look And Say #{0}] Ending position is: (" + endpos[0].ToString() + "," + endpos[1].ToString() + ")",moduleId);
 
         //If shifted position is the same as the end position then use the original start position->0,0->4,4
         if (startpos.SequenceEqual(endpos))
         {
             startpos = new List<int>() { mod(ConvToPosSmall(bomb.GetSerialNumber()[2]) + (int)char.GetNumericValue(inputstring[1]), 5), mod(ConvToPosSmall(bomb.GetSerialNumber()[3]) + (int)char.GetNumericValue(inputstring[2]), 5) };
-            Debug.LogFormat("[LookAndSay #{0}] Starting position changed to: (" + startpos[0].ToString() + "," + startpos[1].ToString() + ")", moduleId);
+            Debug.LogFormat("[Look And Say #{0}] Starting position changed to: (" + startpos[0].ToString() + "," + startpos[1].ToString() + ")", moduleId);
         }
         if (startpos.SequenceEqual(endpos))
         {
             startpos = new List<int>() { 0, 0 };
-            Debug.LogFormat("[LookAndSay #{0}] Starting position changed to: (" + startpos[0].ToString() + "," + startpos[1].ToString() + ")", moduleId);
+            Debug.LogFormat("[Look And Say #{0}] Starting position changed to: (" + startpos[0].ToString() + "," + startpos[1].ToString() + ")", moduleId);
         }
         if (startpos.SequenceEqual(endpos))
         {
             startpos = new List<int>() { 4, 4 };
-            Debug.LogFormat("[LookAndSay #{0}] Starting position changed to: (" + startpos[0].ToString() + "," + startpos[1].ToString() + ")", moduleId);
+            Debug.LogFormat("[Look And Say #{0}] Starting position changed to: (" + startpos[0].ToString() + "," + startpos[1].ToString() + ")", moduleId);
         }
 
         //Find shortest path from start to end
         movelist = new List<char>(FindPath(startpos, endpos));
         if (overload) return;
-        Debug.LogFormat("[LookAndSay #{0}] Shortest path is: " + ListToString(movelist),moduleId);
+        Debug.LogFormat("[Look And Say #{0}] Shortest path is: " + ListToString(movelist),moduleId);
 
         //Convert moves back to numbers
         StringBuilder builder = new StringBuilder();
@@ -148,11 +148,11 @@ public class LookAndSay : MonoBehaviour
         movelistvalues = ConvertMovesToValues(movelist);
         foreach (int i in movelistvalues) builder.Append(i);
         movesstring = builder.ToString();
-        Debug.LogFormat("[LookAndSay #{0}] The moves converted to values: " + movesstring,moduleId);
+        Debug.LogFormat("[Look And Say #{0}] The moves converted to values: " + movesstring,moduleId);
 
         //Revert look and say 
         solution = GetInvertedLookAndSay(movesstring);
-        Debug.LogFormat("[LookAndSay #{0}] The solution is: " + solution,moduleId);
+        Debug.LogFormat("[Look And Say #{0}] The solution is: " + solution,moduleId);
         moduleReady = true;
     }
 
@@ -206,11 +206,11 @@ public class LookAndSay : MonoBehaviour
                     ScreenText.text += input;
                     break;
                 case "KeySubmit":
-                    Debug.LogFormat("[LookAndSay #{0}] User submitted: " + input,moduleId);
+                    Debug.LogFormat("[Look And Say #{0}] User submitted: " + input,moduleId);
                     if (input == solution)
                     {
                         bombaudio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.CorrectChime, this.transform);
-                        Debug.LogFormat("[LookAndSay #{0}] Module solved!", moduleId);
+                        Debug.LogFormat("[Look And Say #{0}] Module solved!", moduleId);
                         ScreenText.fontSize = initialfontsize;
                         ScreenText.text = "SOLVED";
                         module.HandlePass();
@@ -218,13 +218,13 @@ public class LookAndSay : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogFormat("[LookAndSay #{0}] Incorrect sequence submitted! Strike!", moduleId);
+                        Debug.LogFormat("[Look And Say #{0}] Incorrect sequence submitted! Strike!", moduleId);
                         module.HandleStrike();
                         input = "";
                     }
                     break;
                 case "KeyReset":
-                    Debug.LogFormat("[LookAndSay #{0}] User pressed reset.", moduleId);
+                    Debug.LogFormat("[Look And Say #{0}] User pressed reset.", moduleId);
                     input = "";
                     ScreenText.text = inputstring;
                     ScreenText.fontSize = initialfontsize;
@@ -236,7 +236,7 @@ public class LookAndSay : MonoBehaviour
         else if (overload)
         {
             bombaudio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.CorrectChime, this.transform);
-            Debug.LogFormat("[LookAndSay #{0}] Module solved? I guess we will never know for sure...", moduleId);
+            Debug.LogFormat("[Look And Say #{0}] Module solved? I guess we will never know for sure...", moduleId);
             ScreenText.fontSize = initialfontsize;
             ScreenText.text = "SOLVED?";
             module.HandlePass();
@@ -412,7 +412,7 @@ public class LookAndSay : MonoBehaviour
             pathcount++;
             if (pathcount > 300) //Again just to be safe for potentially infinite loops
             {
-                Debug.LogFormat("[LookAndSay #{0}] Too many paths generated... overloading.", moduleId);
+                Debug.LogFormat("[Look And Say #{0}] Too many paths generated... overloading.", moduleId);
                 ScreenText.text = "OVERLOAD";
                 overload = true;
                 moduleReady = true; 
