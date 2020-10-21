@@ -84,10 +84,11 @@ public class LookAndSay : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        beginmodule: 
         //Generate starting string
         inputstring = GenerateStartingString();
         ScreenText.text = inputstring;
-        Debug.LogFormat("[Look And Say #{0}] The starting string is: " + inputstring, moduleId);
+        
 
         //Used for editing font size in ButtonPress
         initialfontsize = ScreenText.fontSize;
@@ -96,11 +97,13 @@ public class LookAndSay : MonoBehaviour
         indexoffset = mod(ConvToPosSmall(bomb.GetSerialNumber()[1]) + (int)char.GetNumericValue(inputstring[11]),5);
         mazeselect = mod(ConvToPosSmall(bomb.GetSerialNumber()[0]) + (int)char.GetNumericValue(inputstring[0]),5);
         ChooseMaze(mazeselect);
-        Debug.LogFormat("[Look And Say #{0}] Use maze " + mazeselect, moduleId);
-        Debug.LogFormat("[Look And Say #{0}] The offset is " + indexoffset, moduleId);
 
         //Convert using Look and say 
         string lookandsaystring = GetLookAndSay(inputstring);
+        foreach (char c in lookandsaystring) if ((int)char.GetNumericValue(c) > 4) goto beginmodule;
+        Debug.LogFormat("[Look And Say #{0}] The starting string is: " + inputstring, moduleId);
+        Debug.LogFormat("[Look And Say #{0}] Use maze " + mazeselect, moduleId);
+        Debug.LogFormat("[Look And Say #{0}] The offset is " + indexoffset, moduleId);
         Debug.LogFormat("[Look And Say #{0}] The string after converting is: " + lookandsaystring, moduleId);
 
         //Convert string to moves
@@ -251,7 +254,6 @@ public class LookAndSay : MonoBehaviour
         {
             builder.Append(UnityEngine.Random.Range(1, 5));
         }
-
         return builder.ToString();
     }
 
@@ -464,7 +466,6 @@ public class LookAndSay : MonoBehaviour
             substringsize++;
             previouschar = arr[i];
         }
-
         return output;
     }
 
@@ -504,10 +505,11 @@ public class LookAndSay : MonoBehaviour
         //loop through elements of array to convert numbers to moves and append to List 
         for (int i = 0; i < arr.Length; i++)
         {
-            index = (int)char.GetNumericValue(arr[i]) - 1; //base 0
-            index += indexoffset; 
-            index %= 4;
-            output.Add(moves[index]);
+            index = (int)char.GetNumericValue(arr[i]);
+            index -= indexoffset;
+            index = mod(index, 4);
+            if (index == 0) index += 4;
+            output.Add(moves[index-1]);
         }
 
         return output;
@@ -519,7 +521,7 @@ public class LookAndSay : MonoBehaviour
         List<int> movevalues = new List<int>();
         foreach (char c in l)
         {
-            movevalues.Add(mod((moves.IndexOf(c) - indexoffset),4) + 1);
+            movevalues.Add(mod((moves.IndexOf(c) + indexoffset),4) + 1);
         }
 
         return movevalues;
